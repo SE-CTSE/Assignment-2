@@ -22,16 +22,19 @@ jobs:
       - name: Publish image to Docker Hub
         run: docker push ireshaprabodhani/product-image-catelog:latest
 
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
       - name: Pull image from Docker Hub
-        run: docker pull product-image-catelog:latest
+        run: docker pull ireshaprabodhani/product-image-catelog:latest
 
       - name: Delete old container (if exists)
         run: docker rm -f product-catelog-container || true
 
       - name: Run Docker container
         run: docker run -d -p 5000:5000 --name product-catelog-container ireshaprabodhani/product-image-catelog:latest
+
+
