@@ -7,28 +7,31 @@ on:
 
 jobs:
   build:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Login to docker hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{ secrets.DOCKER_PASSWORD}}
-      - name: Build docker image
-        run: docker build -t product-image-catelog/Assignment-2/product-catelog .
-      - name: Publish image to docker hub
-        run: docker push product-image-catelog/Assignment-2/product-catelog:latest
 
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build -t product-image-catelog/assignment-2/product-catelog .
+
+      - name: Publish image to Docker Hub
+        run: docker push product-image-catelog/assignment-2/product-catelog:latest
 
   deploy:
     needs: build
-    runs-on: [aws-ec2]
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Pull image from docker hub
-        run : docker pull product-image-catelog/Assignment-2/product-catelog:latest
+      - name: Pull image from Docker Hub
+        run: docker pull product-image-catelog/assignment-2/product-catelog:latest
+
       - name: Delete old container
-        run : docker rm -f product-catelog-container
-      - name: Run docker container
-        run : docker run -d -p 5000:5000 -name product-catelog-container productImage/Assignment-2/product-catelog
-        
+        run: docker rm -f product-catelog-container
+
+      - name: Run Docker container
+        run: docker run -d -p 5000:5000 --name product-catelog-container product-image-catelog/assignment-2/product-catelog:latest
