@@ -17,10 +17,10 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t product-image-catelog .
+        run: docker build -t ireshaprabodhnai/product-image-catelog .
 
       - name: Publish image to Docker Hub
-        run: docker push product-image-catelog:latest
+        run: docker push ireshaprabodhnai/product-image-catelog:latest
 
   deploy:
     needs: build
@@ -28,10 +28,10 @@ jobs:
 
     steps:
       - name: Pull image from Docker Hub
-        run: docker pull product-image-catelog:latest
+        run: docker pull ireshaprabodhnai/product-image-catelog:latest
 
       - name: Delete old container
         run: docker rm -f product-catelog-container
 
       - name: Run Docker container
-        run: docker run -d -p 5000:5000 --name product-catelog-container product-image-catelog:latest
+        run: docker run -d -p 5000:5000 --name product-catelog-container ireshaprabodhnai/product-image-catelog:latest
