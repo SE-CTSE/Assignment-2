@@ -17,7 +17,16 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t product-image-catelog:latest .
+        run: docker build -t product-image-catelog .
+
+      - name: Run docker image
+        run: docker run -p 5000:5000 -d product-image-catelog
+
+      - name: Log into the docker
+        run: docker login --username=ireshaprabodhani
+        
+      - name : Tag the docker image
+        run : docker tag product-image-catelog ireshaprabodhani/product-image-catelog
 
       - name: Publish image to Docker Hub
         run: docker push ireshaprabodhani/product-image-catelog:latest
