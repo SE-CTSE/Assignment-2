@@ -22,9 +22,6 @@ jobs:
       - name: Run docker image
         run: docker run -p 5000:5000 -d product-image-catelog
 
-      - name: Log into the docker
-        run: docker login --username=ireshaprabodhani
-        
       - name : Tag the docker image
         run : docker tag product-image-catelog ireshaprabodhani/product-image-catelog
 
