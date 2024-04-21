@@ -20,7 +20,7 @@ jobs:
         run: docker build -t product-image-catelog .
 
       - name: Publish image to Docker Hub
-        run: docker push product-image-catelog:latest
+        run: docker push ireshaprabodhani/product-image-catelog:latest
 
   deploy:
     needs: build
