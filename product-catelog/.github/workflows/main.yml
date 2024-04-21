@@ -15,9 +15,9 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{ secrets.DOCKER_PASSWORD}}
       - name: Build docker image
-        run: docker build -t productImage/Assignment-2/product-catelog .
+        run: docker build -t productImage .
       - name: Publish image to docker hub
-        run: docker push productImage/Assignment-2/product-catelog:latest
+        run: docker push productImage:latest
 
 
   deploy:
@@ -26,9 +26,9 @@ jobs:
 
     steps:
       - name: Pull image from docker hub
-        run : docker pull productImage/Assignment-2/product-catelog:latest
+        run : docker pull ireshaprabodhani/productImage:latest
       - name: Delete old container
         run : docker rm -f product-catelog-container
       - name: Run docker container
-        run : docker run -d -p 5000:5000 -name product-catelog-container productImage/Assignment-2/product-catelog
+        run : docker run -d -p 5000:5000 -name product-catelog-container ireshaprabodhani/productImage
         
